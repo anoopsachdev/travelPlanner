@@ -20,19 +20,23 @@ const MyTrips = () => {
       collection(db, "AITrips"),
       where("userEmail", "==", user?.email)
     );
-    setUserTrips([]);
+    
+    // REMOVE THIS: setUserTrips([]); 
+    
     const querySnapshot = await getDocs(q);
+    const newTrips = []; // 1. Create a temporary array
+
     querySnapshot.forEach((doc) => {
-      // Adding doc.id to the object is crucial for deletion
-      setUserTrips((prevVal) => [...prevVal, doc.data()]);
+      newTrips.push(doc.data()); // 2. Push data to the temp array
     });
+
+    setUserTrips(newTrips); // 3. Set the state ONCE with the full list
   };
 
   useEffect(() => {
     GetUserTrips();
   }, []);
 
-  // Function to handle trip deletion
   const handleDeleteTrip = async (tripId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this trip?");
     if (!confirmDelete) return;
@@ -40,7 +44,6 @@ const MyTrips = () => {
     try {
         await deleteDoc(doc(db, "AITrips", tripId));
         toast.success("Trip deleted successfully!");
-        // Update the local state to remove the deleted trip immediately
         setUserTrips(prev => prev.filter(trip => trip.id !== tripId));
     } catch (error) {
         console.error(error);
@@ -56,8 +59,8 @@ const MyTrips = () => {
             userTrips.map((trip, index) => (
             <UserTripCardItem 
                 trip={trip} 
-                key={index} 
-                onDelete={handleDeleteTrip} // Passing the delete function
+                key={trip.id} 
+                onDelete={handleDeleteTrip} 
             />
             ))
         ) : (

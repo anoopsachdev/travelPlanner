@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import axios from "axios";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from 'react-router-dom'; // 1. Import Link
 function Header() {
   const user = JSON.parse(localStorage.getItem("user"));
   const [openDialog, setOpenDialog] = useState(false);
@@ -49,17 +50,21 @@ function Header() {
   });
   return (
     <div className="p-3 shadow-sm flex justify-between items-center px-5 sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b">
-      <img src="/logo.svg" alt="TripMate logo" className="h-12 w-auto" />
+      {/* 2. & 3. Logo and Text wrapped in Link for redirection */}
+      <Link to={'/'} className='flex items-center gap-3 cursor-pointer'>
+        <img src="/logo.svg" alt="TripMate logo" className="h-10 w-auto" />
+        <h2 className='font-bold text-2xl text-[#f56551]'>TripMate</h2>
+      </Link>
       {/* <div>
         <Button className="bg-black text-white hover:bg-gray-800">Sign in</Button>
       </div> */}
       {user ? (
         <div className="flex items-cetner gap-x-3">
-          <a href="/my-trip">
+          <Link to="/my-trip">
             <Button variant="outline" className="rounded-full">
               My Trips
             </Button>
-          </a>
+          </Link>
           <Popover>
             <PopoverTrigger>
               <img className="h-10 w-10 rounded-full" src={user?.picture} />
