@@ -64,6 +64,7 @@ function CreateTrip() {
       .replace("{totalDays}", formData?.noOfDays);
 
     const result = await chatSession.sendMessage(FINAL_PROMPT);
+    console.log(result?.response.text());
   };
 
   // ----------------------------
