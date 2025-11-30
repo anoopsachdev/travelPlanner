@@ -55,15 +55,17 @@ export const SelectBudgetOptions = [
     }
 ]
 
+// 👇 UPDATED PROMPT: Explicitly asks for "restaurants" key and removes veg/non-veg details
 export const AI_PROMPT = `
   Generate a travel plan for the destination: {location} for {totalDays} days. 
   Traveler type: {traveler}, with a {budget} budget. 
   
-  1. Hotel Options: Provide exactly 3 options.
-  2. Itinerary: Suggest a daily plan for {totalDays} days.
-  3. Recommended Restaurants: Provide exactly 4 options.
-     Categorize them (e.g., Fine Dining, Authentic).
-     Fields required: Name, Address, Rating, Category, Description, "Veg Recommendations" (max 2 items), "Non-Veg Recommendations" (max 2 items).
+  Output a JSON object with exactly these keys:
+  1. "hotel": List of 4 hotel options.
+  2. "itinerary": List of daily plans.
+  3. "restaurants": List of 4 recommended restaurants.
+
+  For "restaurants", provide fields: name, address, rating, category, description.
 
   IMPORTANT: Keep descriptions concise. Output strictly in valid JSON format only.
 `;

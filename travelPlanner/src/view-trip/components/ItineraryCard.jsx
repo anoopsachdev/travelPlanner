@@ -20,10 +20,13 @@ const ItineraryCard = ({ plan }) => {
     const data = { textQuery: plan?.placeName };
     try {
       const result = await GetPlaceDetails(data);
-      const photoName = result.data.places[0].photos[0]?.name;
-      if (photoName) {
-        const url = PHOTO_REF_URL.replace("{NAME}", photoName);
-        setPhotoUrl(url);
+      // 👇 Added safety check: result.data.places might be undefined or empty
+      if (result.data.places && result.data.places.length > 0) {
+        const photoName = result.data.places[0].photos?.[0]?.name;
+        if (photoName) {
+          const url = PHOTO_REF_URL.replace("{NAME}", photoName);
+          setPhotoUrl(url);
+        }
       }
     } catch (error) {
       console.error("Error fetching place photo:", error);
