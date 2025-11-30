@@ -1,3 +1,5 @@
+import conf from "../conf/conf.js";
+
 export const SelectTravelesList = [
     {
         id: 1,
@@ -60,3 +62,8 @@ export const AI_PROMPT = `
   Suggest a daily itinerary with place names, details, image URLs, geo coordinates, ticket pricing, ratings, and travel time for each location for {totalDays} days, including the best time to visit. 
   Output in JSON format.
 `;
+
+// Add this to the bottom of src/constants/options.jsx
+export const PHOTO_REF_URL =
+  "https://places.googleapis.com/v1/{NAME}/media?maxHeightPx=1000&maxWidthPx=1000&key=" +
+  conf.googlePlaceApiKey;

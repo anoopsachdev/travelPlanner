@@ -1,4 +1,4 @@
-import { GetPlaceDetails } from "@/service/GlobalApi";
+import { GetPlaceDetails } from "@/services/GlobalApi";
 import React, { useEffect, useState } from "react";
 
 const PHOTO_REF_URL =

@@ -23,6 +23,10 @@ const router = createBrowserRouter([
     path: "/view-trip/:tripId",
     element: <ViewTrip />,
   },
+  {
+    path: "/my-trip", 
+    element : <MyTrips/>
+  }
 ])
 
 createRoot(document.getElementById('root')).render(
