@@ -17,7 +17,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "@/services/firebaseConfig.jsx";
+import { useNavigate } from "react-router-dom";
 function CreateTrip() {
   // 1️⃣ ALL HOOKS MUST BE AT THE TOP LEVEL
   const [placeAutocomplete, setPlaceAutocomplete] = useState(null);
@@ -99,7 +101,7 @@ function CreateTrip() {
     }
     setLoading(true);
     const FINAL_PROMPT = AI_PROMPT
-      .replaceAll("{location}", formData?.location?.name || formData?.location?.formatted_address)
+      .replaceAll("{location}", formData?.location?.label || formData?.location?.address)
       .replaceAll("{totalDays}", formData?.noOfDays)
       .replaceAll("{traveler}", formData?.traveler)
       .replaceAll("{budget}", formData?.budget);
@@ -139,8 +141,18 @@ function CreateTrip() {
           <Autocomplete
             onLoad={(ac) => setPlaceAutocomplete(ac)}
             onPlaceChanged={() => {
-              const placeObj = placeAutocomplete.getPlace();
-              handleInputChange("location", placeObj);
+              const place = placeAutocomplete.getPlace();
+              
+              // ❌ OLD CODE (Caused the crash):
+              // handleInputChange("location", place);
+
+              // ✅ NEW CODE (Fixes the crash):
+              handleInputChange("location", {
+                label: place.name,
+                address: place.formatted_address,
+                lat: place.geometry.location.lat(), // Extract the number
+                lng: place.geometry.location.lng()  // Extract the number
+              });
             }}
           >
             <Input placeholder="Search destination" />
