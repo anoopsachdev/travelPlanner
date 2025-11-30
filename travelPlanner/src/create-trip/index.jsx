@@ -23,7 +23,8 @@ function CreateTrip() {
   const [placeAutocomplete, setPlaceAutocomplete] = useState(null);
   const [formData, setFormData] = useState({});
   const [openDialog, setOpenDialog] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: conf.googlePlaceApiKey,
     libraries: ["places"],
@@ -96,7 +97,7 @@ function CreateTrip() {
       toast("Please fill all details.");
       return;
     }
-
+    setLoading(true);
     const FINAL_PROMPT = AI_PROMPT
       .replaceAll("{location}", formData?.location?.name || formData?.location?.formatted_address)
       .replaceAll("{totalDays}", formData?.noOfDays)
@@ -107,6 +108,8 @@ function CreateTrip() {
       console.log("Sending prompt to AI...", FINAL_PROMPT);
       const result = await chatSession.sendMessage(FINAL_PROMPT);
       console.log("Generated Text:", result.response.text());
+      setLoading(false);
+      SaveAiTrip(result?.response?.text());
     } catch (error) {
       console.error("🚨 AI Generation Error:", error);
       toast("AI Error: Check console for details");
@@ -202,8 +205,9 @@ function CreateTrip() {
         <Button
           className="bg-black text-white hover:bg-gray-800"
           onClick={OnGenerateTrip}
+          disabled={loading}
         >
-          Generate Trip
+          {loading ? "Generating Trip..." : "Generate Trip"}
         </Button>
       </div>
 
