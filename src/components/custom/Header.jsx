@@ -86,7 +86,7 @@ function Header() {
       ) : (
         <Button onClick={() => setOpenDialog(true)}>Sign in</Button>
       )}
-      <Dialog open={openDialog}>
+      <Dialog open={openDialog} onOpenChange={setOpenDialog}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <div className="flex items-center justify-center gap-2 mb-3">

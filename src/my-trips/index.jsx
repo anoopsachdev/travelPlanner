@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import UserTripCardItem from "./components/UserTripCardItem";
 import { toast } from "sonner";
-
+import { Loader2 } from "lucide-react"; // Import Loader icon
 const MyTrips = () => {
   const navigate = useNavigate();
   const [userTrips, setUserTrips] = useState([]);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   const GetUserTrips = async () => {
     const user = JSON.parse(localStorage.getItem("user"));
@@ -15,7 +16,7 @@ const MyTrips = () => {
       navigate("/");
       return;
     }
-
+    setLoading(true); // Start loading
     const q = query(
       collection(db, "AITrips"),
       where("userEmail", "==", user?.email)
@@ -31,6 +32,7 @@ const MyTrips = () => {
     });
 
     setUserTrips(newTrips); // 3. Set the state ONCE with the full list
+    setLoading(false); // Stop loading after data is set
   };
 
   useEffect(() => {
@@ -54,21 +56,28 @@ const MyTrips = () => {
   return (
     <div className="p-10 md: px-20 lg:px-36">
       <h2 className="font-bold text-4xl text-center">My Trips</h2>
-      <div className="grid grid-cols-2 mt-10 md:grid-cols-3 gap-5">
-        {userTrips.length > 0 ? (
-            userTrips.map((trip, index) => (
-            <UserTripCardItem 
-                trip={trip} 
-                key={trip.id} 
-                onDelete={handleDeleteTrip} 
-            />
-            ))
-        ) : (
-            <div className="col-span-3 text-center text-gray-500 mt-10">
-                No trips found. Create one to get started!
-            </div>
-        )}
-      </div>
+      {/* Show Loader while fetching */}
+      {loading ? (
+        <div className="flex justify-center items-center h-[50vh]">
+           <Loader2 className="h-10 w-10 animate-spin text-gray-500" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 mt-10 md:grid-cols-3 gap-5">
+          {userTrips.length > 0 ? (
+              userTrips.map((trip, index) => (
+              <UserTripCardItem 
+                  trip={trip} 
+                  key={trip.id} 
+                  onDelete={handleDeleteTrip} 
+              />
+              ))
+          ) : (
+              <div className="col-span-3 text-center text-gray-500 mt-10">
+                  No trips found. Create one to get started!
+              </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
