@@ -2,7 +2,8 @@
 
 **TripMate** is a smart travel planning application that leverages the power of Artificial Intelligence to create personalized travel itineraries. By integrating Google Gemini AI and Google Places API, TripMate generates detailed daily plans, hotel recommendations, and dining suggestions tailored to your budget and travel companions.
 
-![TripMate Banner](/public/HeroBG.jpeg)
+## TripMate Landing page
+<img width="1440" height="811" alt="520543201-ccbd3f77-1a11-4f8f-ba90-e4561969d67e" src="https://github.com/user-attachments/assets/f559c4ef-24d3-43aa-b9ad-24da5b8d27bc" />
 
 ## ✨ Features
 
