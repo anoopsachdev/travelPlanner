@@ -7,7 +7,7 @@
 ## TripMate Landing page
 <img width="1440" height="810" alt="image" src="https://github.com/user-attachments/assets/ce0630f0-b5e2-426e-97b5-c5ad1140263a" />
 
-## ✨ Features
+## Features
 
 * **🤖 AI-Generated Itineraries:** Generates day-by-day travel plans using Google Gemini AI based on destination, duration, budget, and group size.
 * **🏨 Smart Recommendations:** Suggests hotels and restaurants with ratings, descriptions, and direct Google Maps links.
@@ -17,7 +17,7 @@
 * **📱 Responsive Design:** Built with Tailwind CSS and Shadcn UI for a seamless mobile and desktop experience.
 * **🗑️ Manage Trips:** View past itineraries or delete old trips from your profile.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 **Frontend:**
 * [React.js](https://react.dev/) (Vite)
@@ -30,7 +30,7 @@
 * [Google Gemini API](https://ai.google.dev/) (AI Model: `gemini-2.5-flash`)
 * [Google Places API](https://developers.google.com/maps/documentation/places/web-service/overview)
 * [Vercel](https://vercel.com) (Deployment & Hosting)
-## 🚀 Getting Started
+## Getting Started
 
 Follow these instructions to set up the project locally.
 
